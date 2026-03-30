@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Koy Store - مولد يوزرات</title>
-
+  <title>Koy Store - مولد رباعي ديسكورد</title>
   <style>
     body {
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       background: #0f172a;
       color: white;
       margin: 0;
@@ -42,15 +41,17 @@
     }
 
     .container {
-      padding: 40px;
+      padding: 40px 20px;
     }
 
-    input, select, button {
-      padding: 12px;
-      margin: 10px;
-      border-radius: 10px;
+    select, button {
+      background: white;
+      color: black;
       border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
       font-size: 16px;
+      margin: 10px;
     }
 
     button {
@@ -59,10 +60,28 @@
       cursor: pointer;
     }
 
-    .result {
-      margin-top: 20px;
-      font-size: 24px;
+    .results-box {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .name-card {
+      background: #111827;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 22px;
       font-weight: bold;
+      min-width: 100px;
+    }
+
+    .note {
+      margin-top: 15px;
+      color: #94a3b8;
+      font-size: 14px;
     }
 
     .footer {
@@ -74,63 +93,90 @@
     }
   </style>
 </head>
-
 <body>
 
-  <!-- 🔝 الهيدر -->
   <div class="topbar">
     <h1>🛒 Koy Store</h1>
-    <p>جميع الحقوق محفوظة © Koy Store</p>
-    <a href="https://discord.gg/Koy" target="_blank" class="btn">
-      🚀 دخول سيرفرنا
-    </a>
+    <p>مولد يوزرات ديسكورد الرباعية</p>
+    <a href="https://discord.gg/Koy" target="_blank" class="btn">🚀 دخول سيرفرنا</a>
   </div>
 
-  <!-- 🔥 المحتوى -->
   <div class="container">
-    <h2>🔥 مولد يوزرات</h2>
+    <h2>مولد رباعي لديسكورد</h2>
 
-    <input id="base" placeholder="اكتب كلمة..." />
-    <br>
-
-    <select id="style">
-      <option value="normal">عادي</option>
-      <option value="gamer">قيمنق</option>
+    <select id="mode">
+      <option value="plain">4 أحرف بدون رمز</option>
+      <option value="dot">3 أحرف + .</option>
+      <option value="underscore">3 أحرف + _</option>
     </select>
-    <br>
 
-    <button onclick="generate()">توليد</button>
+    <button onclick="generateNames()">توليد</button>
 
-    <div class="result" id="result"></div>
+    <div class="note">
+      إذا اخترت النقطة أو الشرطة السفلية، يصير الاسم 3 أحرف + الرمز = 4 خانات
+    </div>
+
+    <div class="results-box" id="results"></div>
   </div>
 
-  <!-- 🔻 الفوتر -->
   <div class="footer">
     © 2026 Koy Store - All Rights Reserved
   </div>
 
-  <!-- ⚙️ السكربت -->
   <script>
-    function random(arr){
-      return arr[Math.floor(Math.random()*arr.length)];
+    const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+    function randomChar() {
+      return chars[Math.floor(Math.random() * chars.length)];
     }
 
-    function generate(){
-      const base = document.getElementById("base").value || "koy";
-      const style = document.getElementById("style").value;
+    function makePlain() {
+      let name = "";
+      for (let i = 0; i < 4; i++) {
+        name += randomChar();
+      }
+      return name;
+    }
 
-      const gamer = ["killer","ghost","wolf","x","pro"];
-      const num = Math.floor(Math.random()*999);
-
-      let name;
-
-      if(style === "gamer"){
-        name = base + random(gamer) + num;
-      } else {
-        name = base + num;
+    function makeWithSymbol(symbol) {
+      let name = "";
+      for (let i = 0; i < 3; i++) {
+        name += randomChar();
       }
 
-      document.getElementById("result").innerText = name;
+      const pos = Math.floor(Math.random() * 4);
+      const arr = name.split("");
+      arr.splice(pos, 0, symbol);
+      return arr.join("");
+    }
+
+    function generateNames() {
+      const mode = document.getElementById("mode").value;
+      const results = document.getElementById("results");
+      results.innerHTML = "";
+
+      const used = new Set();
+
+      while (used.size < 12) {
+        let username = "";
+
+        if (mode === "plain") {
+          username = makePlain();
+        } else if (mode === "dot") {
+          username = makeWithSymbol(".");
+        } else if (mode === "underscore") {
+          username = makeWithSymbol("_");
+        }
+
+        used.add(username);
+      }
+
+      used.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "name-card";
+        div.textContent = name;
+        results.appendChild(div);
+      });
     }
   </script>
 
