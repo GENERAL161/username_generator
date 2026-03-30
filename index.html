@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Koy Store - مولد يوزرات</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      margin: 0;
+      text-align: center;
+    }
+
+    .topbar {
+      background: #111827;
+      padding: 20px;
+      border-bottom: 2px solid #22c55e;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    .topbar p {
+      margin-top: 10px;
+      color: #cbd5e1;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #22c55e;
+      padding: 10px 16px;
+      border-radius: 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 40px;
+    }
+
+    input, select, button {
+      padding: 12px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #22c55e;
+      color: white;
+      cursor: pointer;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .footer {
+      margin-top: 50px;
+      padding: 20px;
+      background: #111827;
+      color: #94a3b8;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔝 الهيدر -->
+  <div class="topbar">
+    <h1>🛒 Koy Store</h1>
+    <p>جميع الحقوق محفوظة © Koy Store</p>
+    <a href="https://discord.gg/Koy" target="_blank" class="btn">
+      🚀 دخول سيرفرنا
+    </a>
+  </div>
+
+  <!-- 🔥 المحتوى -->
+  <div class="container">
+    <h2>🔥 مولد يوزرات</h2>
+
+    <input id="base" placeholder="اكتب كلمة..." />
+    <br>
+
+    <select id="style">
+      <option value="normal">عادي</option>
+      <option value="gamer">قيمنق</option>
+    </select>
+    <br>
+
+    <button onclick="generate()">توليد</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <!-- 🔻 الفوتر -->
+  <div class="footer">
+    © 2026 Koy Store - All Rights Reserved
+  </div>
+
+  <!-- ⚙️ السكربت -->
+  <script>
+    function random(arr){
+      return arr[Math.floor(Math.random()*arr.length)];
+    }
+
+    function generate(){
+      const base = document.getElementById("base").value || "koy";
+      const style = document.getElementById("style").value;
+
+      const gamer = ["killer","ghost","wolf","x","pro"];
+      const num = Math.floor(Math.random()*999);
+
+      let name;
+
+      if(style === "gamer"){
+        name = base + random(gamer) + num;
+      } else {
+        name = base + num;
+      }
+
+      document.getElementById("result").innerText = name;
+    }
+  </script>
+
+</body>
+</html>
